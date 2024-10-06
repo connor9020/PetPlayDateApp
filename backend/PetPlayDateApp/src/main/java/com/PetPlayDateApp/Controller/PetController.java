@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.PetPlayDateApp.entity.Pet;
+import com.PetPlayDateApp.entity.User;
+import com.PetPlayDateApp.repository.UserRepository;
 import com.PetPlayDateApp.service.PetService;
 
 
@@ -24,28 +26,33 @@ public class PetController {
 	@Autowired
 	private PetService petService;
 	
-	
 	@GetMapping
 	public List<Pet> getAllPets() {
 		return petService.getAllPets();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/{pid}")
 	public Optional<Pet> getPetById(@PathVariable Long pid){
 		return petService.getPetById(pid);			
 	}
 	
-	@PostMapping
-	public Pet createPet( @RequestBody Pet pet) {
-		return petService.createPet(pet);
+	// still need to fix
+	@GetMapping("/byowner/{uid}")
+	public List<Pet> getPetsByUid(@PathVariable Long uid){
+		return petService.getPetsByUid(uid);
 	}
 	
-	@PutMapping("/{id}")
+	@PostMapping
+	public Pet createPet(@RequestBody Pet pet) {
+	    return petService.createPet(pet);
+	}
+	
+	@PutMapping("/{pid}")
 	public Pet updatePet(@PathVariable Long pid, @RequestBody Pet petDetails) {
 		return petService.updatePet(pid, petDetails);	
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{pid}")
 	public void deletePet(@PathVariable Long pid) {
 		petService.deletePet(pid);
 	}

@@ -1,6 +1,8 @@
 
 package com.PetPlayDateApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +15,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Pet {
+public abstract class Pet {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +26,10 @@ public class Pet {
 	private String type;
 	private String color;
 	
-	@ManyToOne
-	@JoinColumn(name = "uid")
-	private User owner;
+    @ManyToOne
+    @JoinColumn(name = "uid")
+    @JsonBackReference
+    private User owner;
 	
 	public Pet() {
 	}
@@ -61,12 +64,12 @@ public class Pet {
 		this.age = age;
 	}
 
-	public String getPetType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setPetType(String petType) {
-		this.type = petType;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getColor() {

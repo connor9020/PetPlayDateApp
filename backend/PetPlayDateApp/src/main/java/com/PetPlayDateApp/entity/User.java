@@ -3,6 +3,9 @@ package com.PetPlayDateApp.entity;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +17,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonProperty("uid")
 	private Long uid;
 	private String name; 
 	private String email;
@@ -21,8 +25,9 @@ public class User {
 	private String phoneNumber;
 	
 	//allows mapping of multiple pets to one owner
-	@OneToMany(mappedBy = "owner")
-	private Set<Pet> pets;
+    @OneToMany(mappedBy = "owner")
+    @JsonManagedReference
+    private Set<Pet> pets;
 	
 	public User() {
 		// TODO Auto-generated constructor stub
@@ -38,12 +43,12 @@ public class User {
 	}
 
 
-	public Long getId() {
+	public Long getUid() {
 		return uid;
 	}
 
 
-	public void setId(Long uid) {
+	public void setUid(Long uid) {
 		this.uid = uid;
 	}
 
